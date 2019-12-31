@@ -4,14 +4,14 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="export_to_telegraph",
-    version="0.0.50",
+    name="cached_url",
+    version="0.0.1",
     author="Yunzhi Gao",
     author_email="gaoyunzhi@gmail.com",
-    description="Library for export webpage to Telegraph.",
+    description="Library for get url content (cached when testing).",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/gaoyunzhi/export_to_telegraph",
+    url="https://github.com/gaoyunzhi/cached_url",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
