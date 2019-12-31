@@ -2,6 +2,6 @@
 *dist*
 *tmp*
 *nohup*
-*cache*
+*pycache*
 *egg-info*
 tmp/*
