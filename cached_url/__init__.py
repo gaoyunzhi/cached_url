@@ -3,6 +3,7 @@
 
 name = 'cached_url'
 import os
+import sys
 
 def getUrlContent(url):
 	headers = {

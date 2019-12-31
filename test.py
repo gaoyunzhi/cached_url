@@ -2,29 +2,5 @@
 # -*- coding: utf-8 -*-
 
 import cached_url
-from cached_url import export, _formaturl
-import os
-import sys
 
-urls = [
-	'https://madeinchinajournal.com/2019/04/18/the-plight-of-sex-workers-in-china%ef%bb%bf-from-criminalisation-and-abuse-to-activism/'
-]
-
-def _test():
-	if len(sys.argv) > 1:
-		mode = sys.argv[1]
-	else:
-		mode = ''
-	if mode == 'open':
-		mode = ''
-	for url in urls:
-		if not mode in url:
-			continue
-		print('原文：', url)
-		r = export(url, True, True)
-		print('导出：', r)
-		if 'open' in str(sys.argv):
-			os.system('open ' + _formaturl(r) + ' -g')
-		print('')
-
-_test()
+print(cached_url.get('https://www.bbc.com/zhongwen/simp'))
