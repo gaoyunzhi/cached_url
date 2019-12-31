@@ -4,6 +4,8 @@
 name = 'cached_url'
 import os
 import sys
+import hashlib
+import requests
 
 def getUrlContent(url):
 	headers = {
@@ -14,7 +16,7 @@ def getUrlContent(url):
 	return requests.get(url, headers=headers).text
 
 def cachedContent(url):
-	cache = 'tmp/' + hashlib.sha224(url.encode('utf-8')).hexdigest()[:10] + '.html'
+	cache = 'tmp/' + hashlib.sha224(url.encode('utf-8')).hexdigest()[:3] + '.html'
 	try:
 		with open(cache) as f:
 			return f.read()
