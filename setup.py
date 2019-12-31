@@ -18,12 +18,5 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=[
-        'html_telegraph_poster',
-        'bs4',
-        'readability-lxml',
-        'telegram_util>=0.0.20',
-        'readee>=0.0.13',
-    ],
     python_requires='>=3.0',
 )
