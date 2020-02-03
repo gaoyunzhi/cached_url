@@ -33,6 +33,6 @@ def cachedContent(url, headers = {}):
 
 def get(url, headers = {}):
 	if 'test' in str(sys.argv):
-		return cachedContent(url)
+		return cachedContent(url, headers)
 	else:
 		return getUrlContent(url, headers)
