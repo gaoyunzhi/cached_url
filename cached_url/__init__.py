@@ -33,8 +33,8 @@ def cachedContent(url, headers = {}):
 			f.write(content)
 		return content
 
-def get(url, headers = {}):
-	if 'test' in str(sys.argv):
+def get(url, headers = {}, force_cache=False):
+	if force_cache or 'test' in str(sys.argv):
 		return cachedContent(url, headers)
 	else:
 		return getUrlContent(url, headers)
