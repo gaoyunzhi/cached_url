@@ -20,7 +20,7 @@ def getUrlContent(url, headers = {}, mode = ''):
 	
 def getFileName(url):
 	h = hashlib.sha224(url.encode('utf-8')).hexdigest()[:3]
-	k = re.sub(r'\W+', '', url.split('/')[-1].split('.')[0])[:10]
+	k = re.sub(r'\W+', '', url.strip('/').split('/')[-1].split('.')[0])[:10]
 	return k + '_' + h
 
 def cachedContent(url, headers = {}, mode=''):
