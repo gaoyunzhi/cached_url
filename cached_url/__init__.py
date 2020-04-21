@@ -7,11 +7,13 @@ import sys
 import hashlib
 import requests
 import re
+import time
 
-def getUrlContent(url, headers = {}, mode = ''):
+def getUrlContent(url, headers = {}, mode = '', sleep = 0):
 	headers['method'] = headers.get('method', 'GET')
 	headers['accept'] = headers.get('accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/apng,*/*;q=0.8,application/signed-exchange;v=b3')
 	headers['user-agent'] = headers.get('user-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36')
+	time.sleep(sleep)
 	r = requests.get(url, headers=headers)
 	if mode != 'b':
 		r.encoding = 'utf-8'
@@ -23,21 +25,21 @@ def getFileName(url):
 	k = re.sub(r'\W+', '', url.strip('/').split('/')[-1].split('.')[0])[:10]
 	return k + '_' + h
 
-def cachedContent(url, headers = {}, mode=''):
+def cachedContent(url, headers = {}, mode='', sleep = 0):
 	ext = os.path.splitext(url)[1] or '.html'
 	cache = 'tmp/' + getFileName(url) + ext
 	try:
 		with open(cache, 'r' + mode) as f:
 			return f.read()
 	except:
-		content = getUrlContent(url, headers, mode)
+		content = getUrlContent(url, headers, mode, sleep)
 		os.system('mkdir tmp > /dev/null 2>&1')
 		with open(cache, 'w' + mode) as f:
 			f.write(content)
 		return content
 
-def get(url, headers = {}, force_cache=False, mode = ''):
+def get(url, headers = {}, force_cache=False, mode = '', sleep = 0):
 	if force_cache or 'test' in str(sys.argv):
-		return cachedContent(url, headers, mode)
+		return cachedContent(url, headers, mode, sleep)
 	else:
-		return getUrlContent(url, headers, mode)
+		return getUrlContent(url, headers, mode, sleep)
