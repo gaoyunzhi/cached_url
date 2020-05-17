@@ -25,9 +25,12 @@ def getFileName(url):
 	k = re.sub(r'\W+', '', url.strip('/').split('/')[-1].split('.')[0])[:10]
 	return k + '_' + h
 
+def getFilePath(url):
+	ext = os.path.splitext(url.replace('=', '.'))[1] or '.html'
+	return 'tmp/' + getFileName(url) + ext
+
 def cachedContent(url, headers = {}, mode='', sleep = 0):
-	ext = os.path.splitext(url)[1] or '.html'
-	cache = 'tmp/' + getFileName(url) + ext
+	cache = getFilePath(url)
 	try:
 		with open(cache, 'r' + mode) as f:
 			return f.read()
