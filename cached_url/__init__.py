@@ -26,7 +26,12 @@ def getFileName(url):
 	return k + '_' + h
 
 def getFilePath(url):
-	ext = os.path.splitext(url.replace('=', '.'))[1] or '.html'
+	text = url
+	for char in ['=', '&', ',']:
+		text = text.replace(char, '.')
+	ext = os.path.splitext(text)[1] or '.html'
+	if len(ext) > 10:
+		ext = ext[0] + ext[-9:]
 	return 'tmp/' + getFileName(url) + ext
 
 def cachedContent(url, headers = {}, mode='', sleep = 0):
