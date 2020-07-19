@@ -21,8 +21,8 @@ def getUrlContent(url, headers = {}, mode = '', sleep = 0):
 	return r.content
 	
 def getFileName(url):
-	h = hashlib.sha224(url.encode('utf-8')).hexdigest()[:3]
 	k = re.sub(r'\W+', '', url.strip('/').split('/')[-1].split('.')[0])[:10]
+	h = hashlib.sha224(url.encode('utf-8')).hexdigest()[:13 - len(k)]
 	return k + '_' + h
 
 def getFilePath(url):
