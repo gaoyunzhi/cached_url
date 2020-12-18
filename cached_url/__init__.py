@@ -29,6 +29,7 @@ def getFilePath(url):
 	text = url
 	for char in ['=', '&', ',']:
 		text = text.replace(char, '.')
+	text = text.split('?')[0]
 	ext = os.path.splitext(text)[1] or '.html'
 	if len(ext) > 10:
 		ext = ext[0] + ext[-9:]
