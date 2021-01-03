@@ -21,7 +21,9 @@ def getUrlContent(url, headers={}, mode='', sleep=0):
     if mode != 'b':  # for text
         r = requests.head(url, headers=headers)
         accept_list = ['text', 'html', 'xml', 'json']
-        if not any(accept in r.headers['content-type'] for accept in accept_list):  # not text
+        if not r.headers.get('content-type'):
+            print(url, 'cached_url no_content_type')
+        if r.headers.get('content-type') and not any(accept in r.headers['content-type'] for accept in accept_list):  # not text
             raise Exception('Not a webpage')
 
     r = requests.get(url, headers=headers)
