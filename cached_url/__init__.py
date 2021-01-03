@@ -18,13 +18,14 @@ def getUrlContent(url, headers={}, mode='', sleep=0):
                                         'like Gecko) Chrome/78.0.3904.97 Safari/537.36')
     time.sleep(sleep)
 
-    r = requests.head(url, headers=headers)
-    accept_list = ['text', 'html', 'xml', 'json']
-    if not any(accept in r.headers['content-type'] for accept in accept_list):
-        return ''  # or raise?
+    if mode != 'b':  # for text
+        r = requests.head(url, headers=headers)
+        accept_list = ['text', 'html', 'xml', 'json']
+        if not any(accept in r.headers['content-type'] for accept in accept_list):  # not text
+            raise Exception('Not a webpage')
 
     r = requests.get(url, headers=headers)
-    if mode != 'b':
+    if mode != 'b':  # for text
         r.encoding = 'utf-8'
         return r.text
     return r.content
