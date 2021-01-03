@@ -3,6 +3,7 @@
 
 import cached_url
 
-# url = 'https://www.bbc.com/zhongwen/simp'
-url = 'https://img9.doubanio.com/view/status/l/public/64f0c054cbc6f3d.jpg'
-print(cached_url.getFilePath(url))
+if __name__ == '__main__':
+	url = 'https://www.bbc.com/zhongwen/simp'
+	url = 'https://img9.doubanio.com/view/status/l/public/64f0c054cbc6f3d.jpg'
+	cached_url.get(url, mode='b')
