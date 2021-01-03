@@ -12,11 +12,17 @@ import time
 
 def getUrlContent(url, headers={}, mode='', sleep=0):
     headers['method'] = headers.get('method', 'GET')
-    headers['accept'] = headers.get('accept', 'text,image,application/xhtml+xml,application/xml')
+    headers['accept'] = headers.get('accept', 'text,image,application/xhtml+xml,application/xml')  # Not mandatory
     headers['user-agent'] = headers.get('user-agent',
                                         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, '
                                         'like Gecko) Chrome/78.0.3904.97 Safari/537.36')
     time.sleep(sleep)
+
+    r = requests.head(url, headers=headers)
+    accept_list = ['text', 'html', 'xml', 'json']
+    if not any(accept in r.headers['content-type'] for accept in accept_list):
+        return ''  # or raise?
+
     r = requests.get(url, headers=headers)
     if mode != 'b':
         r.encoding = 'utf-8'
