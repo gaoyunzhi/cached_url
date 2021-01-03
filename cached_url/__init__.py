@@ -22,7 +22,7 @@ def getUrlContent(url, headers={}, mode='', sleep=0):
         r = requests.head(url, headers=headers)
         accept_list = ['text', 'html', 'xml', 'json']
         if r.headers.get('content-type') and not any(accept in r.headers['content-type'] for accept in accept_list):  # not text
-            raise Exception('Not a webpage')
+            raise Exception('Not a webpage: ' + url)
 
     r = requests.get(url, headers=headers)
     if mode != 'b':  # for text
