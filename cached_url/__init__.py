@@ -13,22 +13,19 @@ import time
 def getUrlContent(url, headers={}, mode='', sleep=0):
     headers['method'] = headers.get('method', 'GET')
     headers['accept'] = headers.get('accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/apng,*/*;q=0.8,application/signed-exchange;v=b3')
-    headers['user-agent'] = headers.get('user-agent',
-                                        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, '
-                                        'like Gecko) Chrome/78.0.3904.97 Safari/537.36')
+    headers['user-agent'] = headers.get('user-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36')
     time.sleep(sleep)
 
-    if mode != 'b':  # for text
-        r = requests.head(url, headers=headers)
-        accept_list = ['text', 'html', 'xml', 'json', 'octet-stream']
-        if r.headers.get('content-type') and not any(accept in r.headers['content-type'] for accept in accept_list):  # not text
-            raise Exception('Not a webpage: ' + url)
-
-    r = requests.get(url, headers=headers)
-    if mode != 'b':  # for text
-        r.encoding = 'utf-8'
-        return r.text
-    return r.content
+    with requests.get(url, headers=headers, stream=True) as r:
+        if mode == 'b':  # for binary
+            return r.content
+        # for text
+        accept_list = ['text', 'html', 'xml', 'json']
+        if r.headers.get('content-type') and any(accept in r.headers['content-type'] for accept in accept_list):  # is webpage
+            r.iter_content()
+            r.encoding = 'utf-8'
+            return r.text
+        raise Exception('Not a webpage: ' + url)
 
 
 def getFileName(url):
