@@ -4,6 +4,6 @@
 import cached_url
 
 if __name__ == '__main__':
-	url = 'https://www.bbc.com/zhongwen/simp'
+	url = 'https://www.coolloud.org.tw/'
 	# url = 'https://img9.doubanio.com/view/status/l/public/64f0c054cbc6f3d.jpg'
-	cached_url.get(url, mode='b')
+	cached_url.get(url)
