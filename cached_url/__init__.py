@@ -19,12 +19,21 @@ def getUrlContent(url, headers={}, mode='', sleep=0):
     with requests.get(url, headers=headers, stream=True) as r:
         if mode == 'b':  # for binary
             return r.content
+
         # for text
         accept_list = ['text', 'html', 'xml', 'json']
         if r.headers.get('content-type') and any(accept in r.headers['content-type'] for accept in accept_list):  # is webpage
             r.iter_content()
-            r.encoding = 'utf-8'
+
+            if r.encoding == 'ISO-8859-1':  # no encoding is set on the page
+                encodings = requests.utils.get_encodings_from_content(r.text)  # guess encoding from content
+                if encodings:  # guess encoding out
+                    r.encoding = encodings[0]
+                else:  # guess encoding failed
+                    r.encoding = r.apparent_encoding  # use r.headers['content-encoding']
+
             return r.text
+
         raise Exception('Not a webpage: ' + url)
 
 
