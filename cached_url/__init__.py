@@ -17,16 +17,15 @@ def getUrlContent(url, headers={}, mode='', sleep=0):
     time.sleep(sleep)
 
     with requests.get(url, headers=headers, stream=True) as r:
-        if mode == 'b':  # not for text
+        if mode == 'b':  # for binary
             return r.content
-        else:  # for text
-            accept_list = ['text', 'html', 'xml', 'json']
-            if r.headers.get('content-type') and not any(accept in r.headers['content-type'] for accept in accept_list):  # not text
-                raise Exception('Not a webpage: ' + url)
-            else:  # is a webpage
-                r.iter_content()
-                r.encoding = 'utf-8'
-                return r.text
+        # for text
+        accept_list = ['text', 'html', 'xml', 'json']
+        if r.headers.get('content-type') and any(accept in r.headers['content-type'] for accept in accept_list):  # is webpage
+            r.iter_content()
+            r.encoding = 'utf-8'
+            return r.text
+        raise Exception('Not a webpage: ' + url)
 
 
 def getFileName(url):
