@@ -16,17 +16,17 @@ def getUrlContent(url, headers={}, mode='', sleep=0):
     headers['user-agent'] = headers.get('user-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36')
     time.sleep(sleep)
 
-    if mode != 'b':  # for text
-        r = requests.head(url, headers=headers, allow_redirects=True)  # 301/302 target
-        accept_list = ['text', 'html', 'xml', 'json']
-        if r.headers.get('content-type') and not any(accept in r.headers['content-type'] for accept in accept_list):  # not text
-            raise Exception('Not a webpage: ' + url)
-
-    r = requests.get(url, headers=headers)  # the default value of allow_redirects in requests.get() is True
-    if mode != 'b':  # for text
-        r.encoding = 'utf-8'
-        return r.text
-    return r.content
+    with requests.get(url, headers=headers, stream=True) as r:
+        if mode == 'b':  # not for text
+            return r.content
+        else:  # for text
+            accept_list = ['text', 'html', 'xml', 'json']
+            if r.headers.get('content-type') and not any(accept in r.headers['content-type'] for accept in accept_list):  # not text
+                raise Exception('Not a webpage: ' + url)
+            else:  # is a webpage
+                r.iter_content()
+                r.encoding = 'utf-8'
+                return r.text
 
 
 def getFileName(url):
