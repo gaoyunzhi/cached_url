@@ -31,6 +31,7 @@ def getUrlContent(url, headers={}, mode='', sleep=0):
                     r.encoding = encodings[0]
                 else:  # guess encoding failed
                     r.encoding = r.apparent_encoding  # use r.headers['content-encoding']
+            print(r.encoding)
 
             return r.text
 
