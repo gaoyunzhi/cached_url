@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="cached_url",
-    version="0.0.24",
+    version="0.0.26",
     author="Yunzhi Gao",
     author_email="gaoyunzhi@gmail.com",
     description="Library for get url content (cached when testing).",
