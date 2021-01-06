@@ -16,7 +16,10 @@ def getUrlContent(url, headers={}, mode='', sleep=0):
     headers['user-agent'] = headers.get('user-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36')
     time.sleep(sleep)
 
-    with requests.get(url, headers=headers, stream=True) as r:
+    with requests.get(url, headers=headers, stream=True, allow_redirects=True) as r:
+        if r.status_code != 200:
+            raise Exception('HTTP ' + str(r.status_code) + ' : ' + url)
+
         if mode == 'b':  # for binary
             return r.content
 
