@@ -18,7 +18,7 @@ def getUrlContent(url, headers={}, mode='', sleep=0):
 
     with requests.get(url, headers=headers, stream=True, allow_redirects=True) as r:
         if r.status_code != 200:
-            raise Exception('HTTP ' + r.status_code + ' : ' + url)
+            raise Exception('HTTP ' + str(r.status_code) + ' : ' + url)
 
         if mode == 'b':  # for binary
             return r.content
