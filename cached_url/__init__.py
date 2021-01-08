@@ -18,7 +18,7 @@ def getUrlContent(url, headers={}, mode='', sleep=0):
 
     with requests.get(url, headers=headers, stream=True) as r:
         if r.status_code != 200:
-            print('cached_url fetch failed', url, r.status_codes)
+            print('cached_url fetch failed', url, r.status_code)
             return 'HTTP ' + str(r.status_code)
 
         if mode == 'b':  # for binary
