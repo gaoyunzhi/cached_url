@@ -18,8 +18,7 @@ def getUrlContent(url, headers={}, mode='', sleep=0):
 
     with requests.get(url, headers=headers, stream=True) as r:
         if r.status_code != 200:
-            print('cached_url', url, r.status_code, r.text)
-            raise Exception('HTTP ' + str(r.status_code) + ' : ' + url)
+            return 'HTTP ' + str(r.status_code)
 
         if mode == 'b':  # for binary
             return r.content
@@ -32,7 +31,7 @@ def getUrlContent(url, headers={}, mode='', sleep=0):
                 r.encoding = None  # set encoding to None so Response.text() will detect the encoding
             return r.text
 
-        raise Exception('Not a webpage: ' + url)
+        return 'Not a webpage'
 
 
 def getFileName(url):
