@@ -27,9 +27,7 @@ def getUrlContent(url, headers={}, mode='', sleep=0):
         # for text
         accept_list = ['text', 'html', 'xml', 'json']
         if r.headers.get('content-type') and any(accept in r.headers['content-type'] for accept in accept_list):  # is webpage
-            r.iter_content()
-            if r.encoding == 'ISO-8859-1':  # requests use default ISO-8859-1 while encoding is not set
-                r.encoding = None  # set encoding to None so Response.text() will detect the encoding
+            r.encoding = 'utf-8'
             return r.text
 
         return 'Not a webpage'
